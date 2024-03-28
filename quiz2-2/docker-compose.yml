@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  my-db:
+    platform: linux/amd64 # for apple chip
+    image: mariadb:latest
+    environment: 
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
+      - MARIADB_DATABASE=mydb
+    ports:
+      - 3306:3306
+    networks:
+      - my-service
+
+  my-backend:
+    image: [Docker Hub 계정ID/이미지명:태그명]
+    ports:
+      - 8080:8080
+    depends_on:
+      - my-db
+    networks:
+      - my-service
+
+networks:
+  my-service:
+    external: true
+      
